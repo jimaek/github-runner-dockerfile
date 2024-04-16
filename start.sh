@@ -9,11 +9,11 @@ echo "REG_TOKEN ${REG_TOKEN}"
 
 cd /home/docker/actions-runner
 
-./config.sh --url https://github.com/${ORG} --token ${REG_TOKEN} --replace
+./config.sh --url https://github.com/${ORG} --token ${REG_TOKEN} --replace --unattended
 
 cleanup() {
     echo "Removing runner..."
-    ./config.sh remove --unattended --token ${REG_TOKEN}
+    ./config.sh remove --token ${REG_TOKEN}
 }
 
 trap 'cleanup; exit 130' INT
