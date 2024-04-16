@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sudo dockerd &
+
 echo "ORG ${ORG}"
 echo "ACCESS_TOKEN ${ACCESS_TOKEN}"
 
