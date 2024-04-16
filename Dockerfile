@@ -1,7 +1,5 @@
 FROM ubuntu:20.04
 
-ARG RUNNER_VERSION="2.294.0"
-
 # Prevents installdependencies.sh from prompting the user and blocking the image creation
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -11,8 +9,7 @@ RUN apt install -y --no-install-recommends \
 
 
 RUN cd /home/docker && mkdir actions-runner && cd actions-runner \
-    && curl -O -L https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz \
-    && tar xzf ./actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz
+    && curl -sL $(curl -s https://api.github.com/repos/actions/runner/releases/latest | grep browser_download_url | cut -d\" -f4 | egrep 'linux-x64-[0-9.]+tar.gz$') | tar zx
 
 RUN chown -R docker ~docker && /home/docker/actions-runner/bin/installdependencies.sh
 
