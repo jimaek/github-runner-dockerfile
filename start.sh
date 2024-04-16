@@ -1,5 +1,6 @@
 #!/bin/bash
 
+sudo modprobe ip_tables
 sudo dockerd &
 
 echo "ORG ${ORG}"
