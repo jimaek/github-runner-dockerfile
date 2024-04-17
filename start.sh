@@ -1,5 +1,6 @@
 #!/bin/bash
 
+sudo chmod 777 /home/docker/actions-runner/_work
 sudo modprobe ip_tables
 sudo dockerd &
 
