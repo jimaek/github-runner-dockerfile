@@ -2,6 +2,8 @@
 
 sudo chmod 777 /home/docker/actions-runner/_work
 sudo modprobe ip_tables
+sudo pkill -9 -f dockerd
+sudo pkill -9 -f containerd
 sudo dockerd > /home/docker/docker.log 2>&1 &
 
 echo "ORG ${ORG}"
@@ -11,14 +13,16 @@ REG_TOKEN=$(curl -X POST -H "Authorization: Bearer ${ACCESS_TOKEN}" -H "Accept: 
 
 echo "REG_TOKEN ${REG_TOKEN}"
 
-cd /home/docker/actions-runner
-
-./config.sh --url https://github.com/${ORG} --token ${REG_TOKEN} --replace --unattended
-
 cleanup() {
     echo "Removing runner..."
     ./config.sh remove --token ${REG_TOKEN}
 }
+
+cleanup
+
+cd /home/docker/actions-runner
+
+./config.sh --url https://github.com/${ORG} --token ${REG_TOKEN} --replace --unattended
 
 trap 'cleanup; exit 130' INT
 trap 'cleanup; exit 143' TERM
