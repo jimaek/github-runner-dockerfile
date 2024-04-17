@@ -9,7 +9,7 @@ RUN useradd -m docker && echo "docker:docker" | chpasswd && usermod -aG sudo doc
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 RUN apt install -y --no-install-recommends \
-    curl jq build-essential libssl-dev libffi-dev python3 python3-venv python3-dev python3-pip docker.io kmod
+    curl jq build-essential libssl-dev libffi-dev python3 python3-venv python3-dev python3-pip git docker.io kmod
 
 RUN cd /home/docker && mkdir actions-runner && cd actions-runner \
     && curl -sL $(curl -s https://api.github.com/repos/actions/runner/releases/latest | grep browser_download_url | cut -d\" -f4 | egrep 'linux-x64-[0-9.]+tar.gz$') | tar zx
