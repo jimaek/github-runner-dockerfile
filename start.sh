@@ -2,7 +2,7 @@
 
 sudo chmod 777 /home/docker/actions-runner/_work
 sudo modprobe ip_tables
-sudo dockerd &
+sudo dockerd > /home/docker/docker.log 2>&1 &
 
 echo "ORG ${ORG}"
 echo "ACCESS_TOKEN ${ACCESS_TOKEN}"
