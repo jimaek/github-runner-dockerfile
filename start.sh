@@ -13,14 +13,14 @@ REG_TOKEN=$(curl -X POST -H "Authorization: Bearer ${ACCESS_TOKEN}" -H "Accept: 
 
 echo "REG_TOKEN ${REG_TOKEN}"
 
+cd /home/docker/actions-runner
+
 cleanup() {
     echo "Removing runner..."
     ./config.sh remove --token ${REG_TOKEN}
 }
 
 cleanup
-
-cd /home/docker/actions-runner
 
 ./config.sh --url https://github.com/${ORG} --token ${REG_TOKEN} --replace --unattended
 
