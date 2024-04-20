@@ -21,15 +21,19 @@ cleanup() {
     sudo pkill -9 -f containerd
 }
 
+echo "cleanup..."
 cleanup
 
+echo "starting docker..."
 sudo dockerd > /home/docker/docker.log 2>&1 &
 
 sleep 2
 
+echo "config.sh running..."
 ./config.sh --url https://github.com/${ORG} --token ${REG_TOKEN} --replace --unattended
 
 trap 'cleanup; exit 130' INT
 trap 'cleanup; exit 143' TERM
 
+echo "run.sh running..."
 ./run.sh & wait $!
