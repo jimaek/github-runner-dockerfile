@@ -4,7 +4,6 @@ sudo chmod 777 /home/docker/actions-runner/_work
 sudo modprobe ip_tables
 sudo pkill -9 -f dockerd
 sudo pkill -9 -f containerd
-sudo dockerd > /home/docker/docker.log 2>&1 &
 
 echo "ORG ${ORG}"
 echo "ACCESS_TOKEN ${ACCESS_TOKEN}"
@@ -18,9 +17,15 @@ cd /home/docker/actions-runner
 cleanup() {
     echo "Removing runner..."
     ./config.sh remove --token ${REG_TOKEN}
+    sudo pkill -9 -f dockerd
+    sudo pkill -9 -f containerd
 }
 
 cleanup
+
+sudo dockerd > /home/docker/docker.log 2>&1 &
+
+sleep 2
 
 ./config.sh --url https://github.com/${ORG} --token ${REG_TOKEN} --replace --unattended
 
