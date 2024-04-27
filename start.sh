@@ -29,6 +29,12 @@ sudo dockerd > /home/docker/docker.log 2>&1 &
 
 sleep 2
 
+pidof  dockerd >/dev/null
+if [[ $? -ne 0 ]] ; then
+        echo "Failed to start. Killing and restarting the whole container"
+        sudo exit 1
+fi
+
 echo "config.sh running..."
 ./config.sh --url https://github.com/${ORG} --token ${REG_TOKEN} --replace --unattended
 
