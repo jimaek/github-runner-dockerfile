@@ -25,7 +25,7 @@ echo "cleanup..."
 cleanup
 
 echo "starting docker..."
-sudo dockerd > /home/docker/docker.log 2>&1 &
+sudo dockerd --registry-mirror http://192.168.1.51:5000 > /home/docker/docker.log 2>&1 &
 
 sleep 2
 
