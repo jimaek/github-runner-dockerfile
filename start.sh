@@ -40,6 +40,8 @@ echo "config.sh running..."
 
 trap 'cleanup; exit 130' INT
 trap 'cleanup; exit 143' TERM
+trap 'cleanup; exit 1' TERM
+trap 'cleanup; exit 0' TERM
 
 echo "run.sh running..."
 ./run.sh & wait $!
