@@ -1,5 +1,8 @@
 #!/bin/bash
 
+mkdir /home/docker/nfs-cache
+mount -t nfs 192.168.1.100:/volume1/nfs-app-storage/docker-caching-ci /home/docker/nfs-cache
+
 sudo chmod 777 /home/docker/actions-runner/_work
 sudo modprobe ip_tables
 sudo pkill -9 -f dockerd
