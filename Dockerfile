@@ -9,7 +9,7 @@ RUN useradd -m docker && echo "docker:docker" | chpasswd && usermod -aG sudo doc
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 RUN apt install -y --no-install-recommends \
-    curl jq build-essential libssl-dev libffi-dev python3 python3-venv python3-dev python3-pip git kmod
+    curl jq build-essential libssl-dev libffi-dev python3 python3-venv python3-dev python3-pip git kmod nfs-common
 
 RUN curl https://get.docker.com/ | bash
 
