@@ -25,6 +25,14 @@ cleanup() {
     sudo pkill -9 -f containerd
 }
 
+check_docker(){
+    pidof dockerd >/dev/null
+    if [[ $? -ne 0 ]] ; then
+            echo "Failed to start. Killing and restarting the whole container"
+            sudo pkill start.sh
+    fi
+}
+
 echo "cleanup..."
 cleanup
 
@@ -33,16 +41,17 @@ sudo dockerd --registry-mirror http://192.168.1.51:5000 > /home/docker/docker.lo
 
 sleep 2
 
-pidof  dockerd >/dev/null
-if [[ $? -ne 0 ]] ; then
-        echo "Failed to start. Killing and restarting the whole container"
-        sudo exit 1
-fi
+check_docker
+
+sleep 1
+
+echo "start background docker checker loop..."
+while sleep 10; do check_docker; done &
 
 echo "config.sh running..."
 ./config.sh --url https://github.com/${ORG} --token ${REG_TOKEN} --replace --unattended
 
-trap 'cleanup; exit 130' INT
+trap 'cleanup; exit 130' TERM
 trap 'cleanup; exit 143' TERM
 trap 'cleanup; exit 1' TERM
 trap 'cleanup; exit 0' TERM
