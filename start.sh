@@ -1,5 +1,8 @@
 #!/bin/bash
 
+dbus-daemon --system
+/bin/warp-svc &
+
 sudo mkdir /home/docker/nfs-cache
 sudo mount -t nfs 192.168.1.100:/volume1/nfs-app-storage/docker-caching-ci /home/docker/nfs-cache
 sudo chmod 777 /home/docker/nfs-cache
